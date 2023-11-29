@@ -1,10 +1,16 @@
+export type TestGroup = {
+  _id: string;
+  title: string;
+};
+
 export type TestCase = {
   request: {
     route: string;
     method: "GET";
   };
-  expectedReturnCode: number;
+  expectReturnCode: number;
   title: string;
+  testGroup?: string;
   keyConditions?: Record<
     string,
     {

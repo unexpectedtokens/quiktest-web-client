@@ -3,7 +3,11 @@ import { Card } from "../../components/Card";
 import { MdCheck } from "react-icons/md";
 import Link from "next/link";
 async function getTestReports() {
-  const res = await fetch("http://localhost:8080/api/testreports");
+  const res = await fetch("http://localhost:8080/api/testreports", {
+    next: {
+      tags: ["reports"],
+    },
+  });
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 
