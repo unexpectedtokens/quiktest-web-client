@@ -13,7 +13,6 @@ export const TestcaseOverview = ({
   data: TestcasesGroupedOutput;
 }) => {
   const [showTestGroupCreateForm, setShowTestGroupCreateForm] = useState(false);
-  console.log(groupedCases);
   return (
     <>
       <TestcaseGroupForm

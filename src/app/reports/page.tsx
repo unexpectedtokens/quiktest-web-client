@@ -21,7 +21,6 @@ async function getTestReports() {
 
 export default async function TestCases() {
   const data: TestReport[] = await getTestReports();
-  console.log(data);
   return (
     <main>
       <h3 className="text-white mb-5">Testreports ({data.length})</h3>

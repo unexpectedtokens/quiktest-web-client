@@ -34,7 +34,6 @@ export default async function TestCases({
   params: { id: string };
 }) {
   const data: TestReportWithCaseResults = await getTestreportData(params.id);
-  console.log(data);
   return (
     <main>
       <h3 className="text-white mb-5">{data.title}</h3>

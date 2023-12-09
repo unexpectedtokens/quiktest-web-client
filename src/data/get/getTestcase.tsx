@@ -5,7 +5,6 @@ export const getTestcase = async (id: string): Promise<TestCaseWithId> => {
     cache: "no-store",
   });
 
-  console.log(testcase.status);
 
   return testcase.json();
 };

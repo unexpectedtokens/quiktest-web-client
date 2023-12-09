@@ -5,7 +5,6 @@ export const getGroups = async (): Promise<TestGroup[]> => {
     cache: "no-store",
   });
 
-  console.log(testcase.status);
 
   return testcase.json();
 };
