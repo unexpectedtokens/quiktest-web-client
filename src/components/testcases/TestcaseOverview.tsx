@@ -1,26 +1,38 @@
 "use client";
 
-import { TestCaseWithId, TestGroup } from "@/types";
 import { TestcaseGroupForm } from "./TestcaseGroupForm";
 import Link from "next/link";
 import { TestcaseCard } from "./TestcaseCard";
-import { useMemo, useState } from "react";
-import { TestcasesGroupedOutput } from "@/data/get/getTestcases";
+import { useState } from "react";
+import {
+  TestcasesGroupedOutput,
+  testcasesGrouped,
+} from "@/data/get/getTestcases";
+import { useQuery } from "react-query";
 
 export const TestcaseOverview = ({
-  data: { groupedCases, count },
+  data,
 }: {
   data: TestcasesGroupedOutput;
 }) => {
   const [showTestGroupCreateForm, setShowTestGroupCreateForm] = useState(false);
+  const query = useQuery(["cases"], {
+    queryFn: testcasesGrouped,
+    initialData: data,
+  });
+
+  if (query.isLoading) {
+    return <p>Loading...</p>;
+  }
   return (
     <>
       <TestcaseGroupForm
         show={showTestGroupCreateForm}
         handleClose={() => setShowTestGroupCreateForm(false)}
       />
+
       <div className="flex justify-between items-center mb-5">
-        <h3 className="text-white text-lg">Testcases ({count})</h3>
+        <h3 className="text-white text-lg">Testcases ({query.data?.count})</h3>
         <div className="flex gap-5 items-center">
           <button
             className="btn"
@@ -34,8 +46,8 @@ export const TestcaseOverview = ({
         </div>
       </div>
       <div className="flex flex-col gap-10">
-        {Object.keys(groupedCases).map((groupKey) => {
-          const cases = groupedCases[groupKey];
+        {Object.keys(query.data!.groupedCases).map((groupKey) => {
+          const cases = query.data!.groupedCases[groupKey];
           return (
             <div key={groupKey}>
               <h5 className="capitalize text-lg text-slate-50 mb-5 bg-slate-850">

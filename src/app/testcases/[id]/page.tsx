@@ -7,7 +7,5 @@ export default async function UpdateTestCasePage({
 }: {
   params: { id: string };
 }) {
-  const testcase = await getTestcase(params.id);
-  const groups = await getGroups();
-  return <TestcaseForm testcase={testcase} groups={groups} />;
+  return <TestcaseForm testcaseId={params.id} />;
 }

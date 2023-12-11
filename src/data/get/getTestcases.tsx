@@ -1,6 +1,9 @@
 import { TestCaseWithId, TestGroup } from "@/types";
+import { getGroups } from "./getGroups";
 
 type GroupedTestcases = Record<string, TestCaseWithId[]>;
+
+const NIL_ID = "000000000000000000000000";
 
 const sortByGroup = (
   groups: TestGroup[],
@@ -11,10 +14,7 @@ const sortByGroup = (
   groups.forEach((group) => (output[group.title] = []));
   const ungrouped: TestCaseWithId[] = [];
   for (const testCase of testcases) {
-    if (
-      !testCase.testGroup ||
-      testCase.testGroup === "000000000000000000000000"
-    ) {
+    if (!testCase.testGroup || testCase.testGroup === NIL_ID) {
       ungrouped.push(testCase);
     } else {
       const group = groups.find(
@@ -43,9 +43,8 @@ export type TestcasesGroupedOutput = {
   count: number;
 };
 
-export async function testcasesGrouped(
-  groups: TestGroup[]
-): Promise<TestcasesGroupedOutput> {
+export async function testcasesGrouped(): Promise<TestcasesGroupedOutput> {
+  const groups = await getGroups();
   const res = await fetch("http://localhost:8080/api/testcases", {
     cache: "no-store",
   });

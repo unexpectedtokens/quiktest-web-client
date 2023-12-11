@@ -1,18 +1,27 @@
 import { TestReportWithCaseResults } from "@/types";
-import { Card } from "../../../components/Card";
+import { Card } from "../Card";
+import { useQuery } from "react-query";
 import getTestreportData from "@/data/get/getTestReport";
 
-export default async function TestCases({
-  params,
+const TestReportDetail = ({
+  initialData,
+  reportId,
 }: {
-  params: { id: string };
-}) {
-  const data: TestReportWithCaseResults = await getTestreportData(params.id);
+  initialData: TestReportWithCaseResults;
+  reportId: string;
+}) => {
+  const { data } = useQuery<TestReportWithCaseResults>(
+    ["testreport", reportId],
+    {
+      queryFn: () => getTestreportData(reportId),
+      initialData: initialData,
+    }
+  );
   return (
-    <main>
-      <h3 className="text-white mb-5">{data.title}</h3>
+    <>
+      <h3 className="text-white mb-5">{data?.title}</h3>
       <div className="flex flex-col gap-5">
-        {data.tesCaseResults.map((testcaseresult) => (
+        {data?.tesCaseResults.map((testcaseresult) => (
           <Card key={testcaseresult._id}>
             <div className="flex justify-between items-center">
               <p className="text-white flex justify-start items-center">
@@ -48,6 +57,8 @@ export default async function TestCases({
           </Card>
         ))}
       </div>
-    </main>
+    </>
   );
-}
+};
+
+export default TestReportDetail;

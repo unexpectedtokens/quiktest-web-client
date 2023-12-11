@@ -1,14 +1,12 @@
 import { TestcaseOverview } from "@/components/testcases/TestcaseOverview";
-import { getGroups } from "@/data/get/getGroups";
 import { testcasesGrouped } from "@/data/get/getTestcases";
 
 export default async function TestCases() {
-  const groups = await getGroups();
-  const data = await testcasesGrouped(groups);
+  const initialData = await testcasesGrouped();
 
   return (
     <main>
-      <TestcaseOverview data={data} />
+      <TestcaseOverview data={initialData} />
     </main>
   );
 }
