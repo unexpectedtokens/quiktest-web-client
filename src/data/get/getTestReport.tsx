@@ -15,7 +15,7 @@ export default async function getTestreportData(reportId: string) {
   const data: TestReportWithCaseResults = await res.json();
 
   const resCaseResults = await fetch(
-    `http://localhost:8080/api/testreports/${reportId}/results`,
+    `http://localhost:8080/api/testreports/results?testReportId=${reportId}`,
     { cache: "no-store" }
   );
 
